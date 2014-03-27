@@ -1,3 +1,6 @@
+<?php
+session_start();
+ ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,6 +34,9 @@
   </head>
 
   <body>
+  	
+   
+
 
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
@@ -43,25 +49,90 @@
           <a class="brand" href="./">Gymkhana Leisures</a>
           <div class="nav-collapse collapse">
  
-            <form class="navbar-form pull-right" method="post">
-              <input class="span2" type="text" placeholder="Email">
-              <input class="span2" type="password" placeholder="Password">
-              <button type="submit" class="btn">Sign in</button>
+            <form class="navbar-form pull-right" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+              <input class="span2" type="text" placeholder="Email" name="email">
+              <input class="span2" type="password" placeholder="Password" name="password">
+              <input type="submit" name="submit" class="btn" value="Sign in" />
+              <!--<button type="submit" name="submit" class="btn">-->
+              <!-- Small modal -->
+				<!--<input class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" name="submit" type="submit" value="enter" />-->
+              
             </form>
+            
+            
+            
+            
+            
+            
           </div><!--/.nav-collapse -->
         </div>
       </div>
+      
     </div>
-
-    <div class="container">
-
+	
+    
+    
+    
+    <div class="container" style="margin-top:25px;">
+		
+        <?php
+		if(isset($_POST['submit']))
+		{
+			$email = mysql_real_escape_string($_POST['email']);
+			$password = mysql_real_escape_string($_POST['password']);
+			
+			   if(strlen($email)&& strlen($password))
+			   {
+				   
+				   include 'config.php';
+				   $password=md5(mysql_real_escape_string($_POST["password"]));
+				   
+				
+					$login = mysql_query("SELECT * FROM $table1 WHERE (email = '" . mysql_real_escape_string($_POST["email"]) . "') and (password = '$password')");
+// Check username and password match
+if (mysql_num_rows($login) == 1) {
+	$user = mysql_query("SELECT * FROM $table1 WHERE email='".mysql_real_escape_string($_POST["email"])."'");
+	$row = mysql_fetch_array($user);
+				
+					// Set username session variable
+					$_SESSION['name'] = $row['name'];
+					$_SESSION['email'] = $row['email'];
+					
+					//jump into forum
+					header('Refresh: 2; URL=./dashboard.php');
+					echo '<div class="alert alert-success">'.'You have successfully been logged'.'</div>';
+					}
+					else {
+					// Jump to login page
+					session_destroy();
+					
+					echo '<div class="alert alert-danger">'.'Please enter Correct name and passsword'.'</div>';
+					}
+	
+				/*echo '<div class="alert alert-danger">'.$_POST['email'].'</div>';
+				echo '<div class="alert alert-success">'.$_POST['password'].'</div>';*/
+				}
+				else
+				{
+					echo '<div class="alert alert-danger">'.'Enter Email ID &amp; Password'.'</div>';
+					session_destroy();	
+				}
+		}
+		else
+		{
+			session_destroy();
+		}
+	   ?>
+        
       <!-- Main hero unit for a primary marketing message or call to action -->
       <div class="hero-unit">
         <h2>Social &amp; Cultural General Championship</h2>
         <p>Presenting You with all the echos and chaos of Social &amp; Cultural General Championship at one place.</p>
         <p><a href="#" class="btn btn-primary btn-large">Visit Now &raquo;</a></p>
+        
       </div>
-
+      
+     
 
       <footer style=" width:inherit; position:absolute; bottom:0; padding-bottom:10px;">
         <hr>
