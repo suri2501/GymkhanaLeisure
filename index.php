@@ -128,7 +128,7 @@ if (mysql_num_rows($login) == 1) {
       <div class="hero-unit">
         <h2>Social &amp; Cultural General Championship</h2>
         <p>Presenting You with all the echos and chaos of Social &amp; Cultural General Championship at one place.</p>
-        <p><a href="#" class="btn btn-primary btn-large">Visit Now &raquo;</a></p>
+        <p><a href="./dashboard.php" class="btn btn-primary btn-large">Visit Now &raquo;</a></p>
         
       </div>
       

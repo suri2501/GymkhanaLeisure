@@ -9,6 +9,6 @@ unset($_SESSION['name']);
 // session_destroy();
 mysql_close();
 // Jump to login page
-header('Location: index.php');
+header('Location: ./');
 
 ?>

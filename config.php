@@ -4,7 +4,7 @@ $username="root"; // Mysql username
 $password="9475618023"; // Mysql password 
 $db_name="gymkhana_leisures"; // Database name
 $table1='users';
-$table2="forum_question";
+$table2="database";
 $table3="forum_answer";
 
 // Connect to server and select databse.
