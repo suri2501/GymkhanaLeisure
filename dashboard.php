@@ -56,7 +56,7 @@ include 'config.php';
 		  {
 		  ?>
             <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="margin-top:0px; margin-right:5px;">Compose</button></li>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="margin-top:0px; margin-right:5px;" >Acticity Log</button></li>
+            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="margin-top:0px; margin-right:5px;" >Activity Log</button></li>
             <!--<li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal3" style="padding-top:15px;">Profile</button></li>-->
             <li><a href="./logout.php" style="margin-top:-8px; margin-right:0px;">Logout</a></li>
             
@@ -480,8 +480,8 @@ else
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="myModalLabel">Compose</h4>
                       </div>
-                      <div class="modal-body">
-                        	<form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+					  <form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+						<div class="modal-body">
                             	<div class="form-group" style="width:50%; float:left;">
                                 <select class="form-control" name="cup">
                                 
@@ -555,11 +555,10 @@ else
                                 <input name="tags" type="text" class="form-control"  placeholder="E.g : time,date,place">
                               </div>
                               
-                              
-                              <button name="submit1" type="submit" class="btn btn-primary">Submit</button>
-                            </form>
                       </div>
                       <div class="modal-footer">
+					  <button name="submit1" type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         <button type="button" class="btn btn-danger dropdown-toggle" data-dismiss="modal">Close</button>
                         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
                       </div>
@@ -604,8 +603,9 @@ else
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title" id="myModalLabel">Edit</h4>
                       </div>
-                                            <div class="modal-body">
-                        	<form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+					  	<form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            <div class="modal-body">
+                        
                             	<div class="form-group" style="width:50%; float:left;">
                                 <select class="form-control" name="cup">
                                 <option value="<?php echo $row['cup']; ?>" selected><?php echo $row['cup']; ?></option>
@@ -682,10 +682,11 @@ else
                               </div>
                               
                               
-                              <button name="submit_edit" type="submit" class="btn btn-primary">Submit</button>
-                            </form>
+                              
                       </div>
                       <div class="modal-footer">
+					  <button name="submit_edit" type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                       </div>
                     </div>
