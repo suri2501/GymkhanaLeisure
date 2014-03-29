@@ -50,18 +50,24 @@ include 'config.php';
           <a class="navbar-brand" href="dashboard.php">Gymkhana Leisures</a>
         </div>
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right	">
+          <ul class="nav navbar-nav navbar-right" style="margin-top:8px; margin-right:0px;">
           <?php
 		  if(isset($user))
 		  {
 		  ?>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" >Compose</button></li>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="padding-top:15px; margin:0 5px;">Acticity Log</button></li>
+            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="margin-top:0px; margin-right:5px;">Compose</button></li>
+            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="margin-top:0px; margin-right:5px;" >Acticity Log</button></li>
             <!--<li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal3" style="padding-top:15px;">Profile</button></li>-->
-            	
-                 <li><a href="./logout.php">Logout</a></li>
+            <li><a href="./logout.php" style="margin-top:-8px; margin-right:0px;">Logout</a></li>
             
             <?php
+		  }
+		  else
+		  {
+		  ?>
+		  
+			<a href="./"><button class="btn btn-primary"  >Home</button></a>
+		  <?php
 		  }
 			?>
            
@@ -162,7 +168,68 @@ include 'config.php';
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         	
             
+            <?php
+            if(isset($_POST['submit_edit']))
+            {	
+					$id = $_POST['id'];
+					$cup = $_POST['cup'];
+					$event = $_POST['event'];
+					$judges = strtoupper($_POST['judges']);
+					$standing1 = strtoupper($_POST['standing1']);
+					$standing2 = strtoupper($_POST['standing2']);
+					$standing3 = strtoupper($_POST['standing3']);
+					$chaos = strtoupper($_POST['chaos']);
+					
+					$tags = strtoupper($_POST['tags']);
+				
+					//$standing = $standing1.' '.$standing2.' '.$standing3;
+					date_default_timezone_set("Asia/Kolkata"); 
+   					 $date = date('d-m-Y H:i:s'); 
+					 $year = $_POST['session']; 
+					   
+					   
+                
+       if(strlen($cup)&& strlen($event)&& strlen($judges)&& strlen($standing1)&& strlen($standing2)&& strlen($standing3)&& strlen($chaos)&& strlen($tags))
+                   {
+                                      
+                        /*$login = mysql_query("UPDATE `$table2` (  `cup` ,  `event` ,  `session` ,  `judges` ,  `standing1` , `standing2` , `standing3` ,  `chaos` ,  `tags`,`time` ) 
+VALUES ('$cup', '$event','$year','$judges','$standing1','$standing2','$standing3','$chaos','$tags','$date')");*/
+						$login = mysql_query("UPDATE `$table2` SET `cup`='$cup',`event`='$event',`session`='$year',`judges`='$judges',`standing1`='$standing1',`standing2`='$standing2',`standing3`='$standing3',`chaos`='$chaos',`tags`='$tags',`time`='$date' WHERE id=$id");
+						
+							$counter =  substr_count($tags, ' ');
+							$Chunks = explode(" ", $tags);
+							for ($x=0; $x<=$counter; $x++)
+						  {
+							  
+							  $login = mysql_query("SELECT * FROM `$table3` WHERE (tags = '$Chunks[$x]')");
+// Check username and password match
+if (mysql_num_rows($login) == 1) {
+						  
+}
+else
+{
+	$login1 = mysql_query("INSERT INTO   `$table3` (  `tags` ) 
+	VALUES ('$Chunks[$x]')");
+	
+	}
+
+
+						  } 
+						
+    
+                        echo '<div class="alert alert-success">'.'Successfully Updated'.'</div>';
+                        }
+						else
+                    	{
+                        echo '<div class="alert alert-danger">'.'Enter All Fields'.'</div>';
+                            
+                    	}
+                       
+                    }
+                    
             
+            
+            ?>
             
             
             
@@ -186,7 +253,7 @@ include 'config.php';
 					   
 					   
                 
-       if(strlen($cup)&& strlen($event)&& strlen($judges)&& strlen($standing)&& strlen($chaos)&& strlen($tags))
+       if(strlen($cup)&& strlen($event)&& strlen($judges)&& strlen($standing1)&& strlen($standing2)&& strlen($standing3)&& strlen($chaos)&& strlen($tags))
                    {
                                       
                         $login = mysql_query("INSERT INTO   `$table2` (  `cup` ,  `event` ,  `session` ,  `judges` ,  `standing1` , `standing2` , `standing3` ,  `chaos` ,  `tags`,`time` ) 
@@ -209,8 +276,6 @@ else
 	VALUES ('$Chunks[$x]')");
 	
 	}
-
-
 						  } 
 						
     
@@ -359,7 +424,10 @@ else
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>#</th>
+				
+                  <th><?php
+		  if(isset($user))
+		  { ?>#<?php } ?></th>
                   <th>Cup</th>
                   <th>Event</th>
                   <th>Session</th>
@@ -378,7 +446,12 @@ else
 				  
 				?>
                 <tr>
-                  <td><button class="btn btn-default" data-toggle="modal" data-target="#editModal-<?php echo $row['id'];?>">Edit</button></td>
+                  <td><?php
+		  if(isset($user))
+		  { ?>
+		  <button class="btn btn-default" data-toggle="modal" data-target="#editModal-<?php echo $row['id'];?>">Edit</button>
+		  <?php } ?>
+		  </td>
                   <td><?php echo $row['cup']; ?></td>
                   <td><?php echo $row['event']; ?></td>
                   <td><?php echo $row['session']; ?></td>
@@ -535,7 +608,7 @@ else
                         	<form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
                             	<div class="form-group" style="width:50%; float:left;">
                                 <select class="form-control" name="cup">
-                                
+                                <option value="<?php echo $row['cup']; ?>" selected><?php echo $row['cup']; ?></option>
                                 <option value="LITERARY CUP">LITERARY CUP</option>
                                 <option value="ENTERTAINMENT CUP">ENTERTAINMENT CUP</option>
 								<option value="DRAMATICS CUP">DRAMATICS CUP</option>
@@ -545,6 +618,7 @@ else
                               </div>
                               
                               <div class="form-group" style="width:50%; float:left">
+                              <option value="<?php echo $row['cup']; ?>" selected><?php echo $row['cup']; ?></option>
                                 <select class="form-control" name="event">
                                 <option value="ILLUMINATION">ILLUMINATION</option>
                                 <option value="RANGOLI">RANGOLI</option>
@@ -578,6 +652,7 @@ else
                                 <label for="exampleInputEmail1">Judges</label>
                                 <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Juges Deails" value="<?php echo $row['judges'];?>">
                               </div>
+							  <input name="id" type="hidden" value="<?php echo $row['id']; ?>" />
                             
                               <div class="form-group">
                               	<label for="exampleInputPassword1">Standing</label>
@@ -607,12 +682,11 @@ else
                               </div>
                               
                               
-                              <button name="submit1" type="submit" class="btn btn-primary">Submit</button>
+                              <button name="submit_edit" type="submit" class="btn btn-primary">Submit</button>
                             </form>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>
