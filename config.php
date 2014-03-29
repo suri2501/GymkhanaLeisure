@@ -6,6 +6,7 @@ $db_name="gymkhana_leisures"; // Database name
 $table1='users';
 $table2="database";
 $table3="tags";
+$table4="log";
 
 // Connect to server and select databse.
 $conn = mysql_connect("$host", "$username", "$password")or die(mysql_error()); 

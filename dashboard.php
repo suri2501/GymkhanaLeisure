@@ -436,6 +436,7 @@ else
 			
 			?>
           <!--<h2 class="sub-header">Section title</h2>-->
+
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -583,15 +584,63 @@ else
                 </div>
                 
 				<!---------------------------------------------- ACTIVITY LOG MODAL ------------------------------------------------------->
-                <div class="modal fade" id="modal_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
+                <div class="modal fade " id="modal_log" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-lg" style="width:1200px;">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Activity Log</h4>
+                        <h4 class="modal-title" id="myModalLabel">Change Log</h4>
                       </div>
                       <div class="modal-body">
-                        ...
+                        <!----- data ---->
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+				
+                  <th>User</th>
+				  <th>Time</th>
+                  <th>Cup</th>
+                  <th>Event</th>
+                  <th>Session</th>
+                  <th>Judges</th>
+				  <th>Gold</th>
+                  <th>Silver</th>
+                  <th>Bronze</th>
+				  <th>Chaos</th>
+				  <th>Tags</th>
+                </tr>
+              </thead>
+              <tbody>
+				<?php
+				$result4 = mysql_query("SELECT * FROM `$table4`");
+				while($row = mysql_fetch_array($result4))
+				  {
+					$user_id = $row['user_id'];
+					$user_data = mysql_query("SELECT name FROM `$table1` WHERE user_id=$user_id");
+					$user = mysql_fetch_array($user_data);
+				?>
+                <tr>
+                  <td><?php echo $user['name']; ?>		 </td>
+				  <td> <kbd> <?php echo $row['time']; ?></kbd>			 </td>
+                  <td> <kbd> <?php echo $row['cup_new']; ?>			</kbd> &nbsp; <code><strike><?php echo $row['cup_old']; ?>		</strike></code> </td>
+                  <td> <kbd> <?php echo $row['event_new']; ?>		</kbd> &nbsp; <code><strike><?php echo $row['event_old']; ?>	</strike></code> </td>
+                  <td> <kbd> <?php echo $row['session_new']; ?>		</kbd> &nbsp; <code><strike><?php echo $row['session_old']; ?>	</strike></code> </td>
+                  <td> <kbd> <?php echo $row['judges_new']; ?>		</kbd> &nbsp; <code><strike><?php echo $row['judges_old']; ?>	</strike></code> </td>
+                  <td> <kbd> <?php echo $row['standing1_new']; ?>	</kbd> &nbsp; <code><strike><?php echo $row['standing1_old']; ?></strike></code> </td>
+                  <td> <kbd> <?php echo $row['standing2_new']; ?>	</kbd> &nbsp; <code><strike><?php echo $row['standing2_old']; ?></strike></code> </td>
+                  <td> <kbd> <?php echo $row['standing3_new']; ?>	</kbd> &nbsp; <code><strike><?php echo $row['standing3_old']; ?></strike></code> </td>
+                  <td> <kbd> <?php echo $row['chaos_new']; ?>		</kbd> &nbsp; <code><strike><?php echo $row['chaos_old']; ?>	</strike></code> </td>
+                  <td> <kbd> <?php echo $row['tags_new']; ?>		</kbd> &nbsp; <code><strike><?php echo $row['tags_old']; ?>		</strike></code> </td>
+                </tr>
+                <?php
+				  }
+				?>
+                
+              </tbody>
+            </table>
+          </div>		
+						<!-- data end -->
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
@@ -775,6 +824,7 @@ else
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="assets/js/bootstrap-transition.js"></script>
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/docs.min.js"></script>
   </body>
