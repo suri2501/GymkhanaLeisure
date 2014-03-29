@@ -5,7 +5,7 @@ $password="9475618023"; // Mysql password
 $db_name="gymkhana_leisures"; // Database name
 $table1='users';
 $table2="database";
-$table3="forum_answer";
+$table3="tags";
 
 // Connect to server and select databse.
 $conn = mysql_connect("$host", "$username", "$password")or die(mysql_error()); 
