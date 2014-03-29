@@ -636,8 +636,8 @@ else
                               </div>
                               
                               <div class="form-group" style="width:50%; float:left">
-                              <option value="<?php echo $row['cup']; ?>" selected><?php echo $row['cup']; ?></option>
                                 <select class="form-control" name="event">
+								<option value="<?php echo $row['event']; ?>" selected><?php echo $row['event']; ?></option>
                                 <option value="ILLUMINATION">ILLUMINATION</option>
                                 <option value="RANGOLI">RANGOLI</option>
                                 <option value="ENGLISH ELOCUTION">ENGLISH ELOCUTION</option>
