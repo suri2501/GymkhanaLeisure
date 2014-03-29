@@ -83,12 +83,12 @@ include 'config.php';
         	
             <div>
         	<form class="navbar-form navbar-right" style="margin:0; padding:0 5px; width:100%;" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-            <input class="btn btn-primary" type="submit" name="submit11" value="search" style="margin:6px 0; width:100%;" />
+            <input class="btn btn-primary" type="submit" name="submit_search" value="search" style="margin:6px 0; width:100%;" />
             <br />
           	<select name="year_search" class="form-control" style="margin:6px 0; width:100%;">
               	<option style="text-align:center;">YEAR</option>
                 <?php 
-				for ($x=2004; $x<=2014; $x++)
+				for ($x=2014; $x>=2004; $x--)
 				{
                   echo '<option value="'.$x.'-'.($x+1).'">'.$x.'-'.($x+1).'</option>';
 				}
@@ -122,7 +122,7 @@ include 'config.php';
             </select>
             <br />
             <select name="tags_search" class="form-control" style="margin:6px 0; width:100%;">
-              <option>CHAOS</option>
+              <option>TAGS</option>
 			  <?php
 				$result = mysql_query("SELECT * FROM `$table3`");
 				while($row = mysql_fetch_array($result))
@@ -142,7 +142,7 @@ include 'config.php';
           
           <div>
           <p>&nbsp;</p>
-          <hr style="1px solid rgb(204, 201, 201)" />
+          <!--<hr style="1px solid rgb(204, 201, 201)" />
           <p style="margin:0px 5px; width:95%;  text-align:center;" class="btn btn-warning">TRICKER</p>
           
           <div style="margin:10px;">
@@ -151,7 +151,7 @@ include 'config.php';
           <p>Last Modification : </p>
           <p></p>
           
-          </div>
+          </div>-->
           </div>
         
           
@@ -399,7 +399,7 @@ else
 				{
 					$result = mysql_query("SELECT * FROM `$table2`");
 				}
-				if(isset($_POST['submit11']))
+				if(isset($_POST['submit_search']))
 				{
 					if(isset($_POST['event_search'])&&isset($_POST['tags_search'])&&isset($_POST['year_search']))
 					{
@@ -409,9 +409,9 @@ else
 							$event=strtoupper($_POST['event_search']);
 							$year_new  = strtoupper($_POST['year_search']);
 							$tags = '%'.strtoupper($_POST['tags_search']).'%';
-							echo $tags;
+							
 						$result = mysql_query("SELECT * FROM `$table2`
-						WHERE (event='$event') and (session='$year_new') LIKE '$tags'");
+						WHERE (event='$event') AND (session='$year_new') AND tags LIKE '%$tags%'");
 						}
 					}
 				}
@@ -592,6 +592,24 @@ else
 				{
 					$result = mysql_query("SELECT * FROM `$table2`");	
 				}
+				
+				if(isset($_POST['submit_search']))
+				{
+					if(isset($_POST['event_search'])&&isset($_POST['tags_search'])&&isset($_POST['year_search']))
+					{
+						if(strlen($_POST['event_search'])&& strlen($_POST['tags_search'])&& strlen($_POST['year_search']))
+						{
+							
+							$event=strtoupper($_POST['event_search']);
+							$year_new  = strtoupper($_POST['year_search']);
+							$tags = '%'.strtoupper($_POST['tags_search']).'%';
+							
+						$result = mysql_query("SELECT * FROM `$table2`
+						WHERE (event='$event') AND (session='$year_new') AND tags LIKE '%$tags%'");
+						}
+					}
+				}
+				
 				while($row = mysql_fetch_array($result))
 				  {
 				  
