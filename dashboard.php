@@ -5,6 +5,7 @@ if(isset($_SESSION['email']))
 	$user ='';
 	$email = $_SESSION['email'];
 }
+$user_id = $_SESSION['user_id'];
 include 'config.php';
 ?>
 <!DOCTYPE html>
@@ -55,8 +56,8 @@ include 'config.php';
 		  if(isset($user))
 		  {
 		  ?>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="margin-top:0px; margin-right:5px;">Compose</button></li>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="margin-top:0px; margin-right:5px;" >Activity Log</button></li>
+            <li><button class="btn btn-primary" data-toggle="modal" data-target="#modal_compose" style="margin-top:0px; margin-right:5px;">Compose</button></li>
+            <li><button class="btn btn-primary" data-toggle="modal" data-target="#modal_log" style="margin-top:0px; margin-right:5px;" >Activity Log</button></li>
             <!--<li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal3" style="padding-top:15px;">Profile</button></li>-->
             <li><a href="./logout.php" style="margin-top:-8px; margin-right:0px;">Logout</a></li>
             
@@ -189,33 +190,48 @@ include 'config.php';
 					 $year = $_POST['session']; 
 					   
 					   
+					$result = mysql_query("SELECT * FROM `$table2` WHERE id='$id'");  
+					$row = mysql_fetch_array($result);					
+					$cup_old = $row['cup'];
+					$event_old = $row['event'];
+					$judges_old = $row['judges'];
+					$year_old = $row['session'];
+					$standing1_old = $row['standing1'];
+					$standing2_old = $row['standing2'];
+					$standing3_old = $row['standing3'];
+					$chaos_old = $row['chaos'];				
+					$tags_old = $row['tags'];
                 
        if(strlen($cup)&& strlen($event)&& strlen($judges)&& strlen($standing1)&& strlen($standing2)&& strlen($standing3)&& strlen($chaos)&& strlen($tags))
                    {
                                       
                         /*$login = mysql_query("UPDATE `$table2` (  `cup` ,  `event` ,  `session` ,  `judges` ,  `standing1` , `standing2` , `standing3` ,  `chaos` ,  `tags`,`time` ) 
 VALUES ('$cup', '$event','$year','$judges','$standing1','$standing2','$standing3','$chaos','$tags','$date')");*/
+
+						
 						$login = mysql_query("UPDATE `$table2` SET `cup`='$cup',`event`='$event',`session`='$year',`judges`='$judges',`standing1`='$standing1',`standing2`='$standing2',`standing3`='$standing3',`chaos`='$chaos',`tags`='$tags',`time`='$date' WHERE id=$id");
+						
+						mysql_query("INSERT INTO `log`(`user_id`, `entry_id`, `cup_new`, `cup_old`, `event_new`, `event_old`, `session_new`, `session_old`, `judges_new`, `judges_old`, `standing1_new`, `standing1_old`, `standing2_new`, `standing2_old`, `standing3_new`, `standing3_old`, `chaos_new`, `chaos_old`, `tags_new`, `tags_old`)  VALUES('$user_id','$id','$cup','$cup_old','$event','$event_old','$year','$year_old','$judges','$judges_old','$standing1','$standing1_old','$standing2','$standing2_old','$standing3','$standing3_old','$chaos','$chaos_old','$tags','$tags_old')");
+						
+						
 						
 							$counter =  substr_count($tags, ' ');
 							$Chunks = explode(" ", $tags);
 							for ($x=0; $x<=$counter; $x++)
-						  {
-							  
-							  $login = mysql_query("SELECT * FROM `$table3` WHERE (tags = '$Chunks[$x]')");
-// Check username and password match
-if (mysql_num_rows($login) == 1) {
-						  
-}
-else
-{
-	$login1 = mysql_query("INSERT INTO   `$table3` (  `tags` ) 
-	VALUES ('$Chunks[$x]')");
-	
-	}
+							  { 
+								  $login = mysql_query("SELECT * FROM `$table3` WHERE (tags = '$Chunks[$x]')");
+									if (mysql_num_rows($login) == 1) {
+															  
+									}
+									else
+									{
+										$login1 = mysql_query("INSERT INTO   `$table3` (  `tags` ) 
+										VALUES ('$Chunks[$x]')");
+										
+										}
 
 
-						  } 
+							  } 
 						
     
                         echo '<div class="alert alert-success">'.'Successfully Updated'.'</div>';
@@ -259,7 +275,6 @@ else
                                       
                         $login = mysql_query("INSERT INTO   `$table2` (  `cup` ,  `event` ,  `session` ,  `judges` ,  `standing1` , `standing2` , `standing3` ,  `chaos` ,  `tags`,`time` ) 
 VALUES ('$cup', '$event','$year','$judges','$standing1','$standing2','$standing3','$chaos','$tags','$date')");
-						
 						
 							$counter =  substr_count($tags, ' ');
 							$Chunks = explode(" ", $tags);
@@ -474,7 +489,7 @@ else
       </div>
     </div>
     
-    			<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    			<div class="modal fade" id="modal_compose" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -567,19 +582,19 @@ else
                   </div>
                 </div>
                 
-                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<!---------------------------------------------- ACTIVITY LOG MODAL ------------------------------------------------------->
+                <div class="modal fade" id="modal_log" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title2</h4>
+                        <h4 class="modal-title" id="myModalLabel">Activity Log</h4>
                       </div>
                       <div class="modal-body">
                         ...
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                       </div>
                     </div>
                   </div>

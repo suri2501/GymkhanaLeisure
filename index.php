@@ -97,6 +97,7 @@ if (mysql_num_rows($login) == 1) {
 					// Set username session variable
 					$_SESSION['name'] = $row['name'];
 					$_SESSION['email'] = $row['email'];
+					$_SESSION['user_id'] = $row['user_id'];
 					
 					//jump into forum
 					header('Refresh: 2; URL=./dashboard.php');
