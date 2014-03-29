@@ -99,7 +99,7 @@ if (mysql_num_rows($login) == 1) {
 					$_SESSION['email'] = $row['email'];
 					
 					//jump into forum
-					header('Refresh: 2; URL=./dashboard.php?event=ENGLISH%20ELOCUTION');
+					header('Refresh: 2; URL=./dashboard.php');
 					echo '<div class="alert alert-success">'.'You have successfully been logged'.'</div>';
 					}
 					else {

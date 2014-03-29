@@ -50,22 +50,21 @@ include 'config.php';
           <a class="navbar-brand" href="dashboard.php">Gymkhana Leisures</a>
         </div>
         <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
+          <ul class="nav navbar-nav navbar-right	">
           <?php
 		  if(isset($user))
 		  {
 		  ?>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" style="padding-top:15px;">Compose</button></li>
-            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal4" style="padding-top:15px; margin-left:5px;">Edit</button></li>
+            <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal1" >Compose</button></li>
             <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal2" style="padding-top:15px; margin:0 5px;">Acticity Log</button></li>
             <!--<li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal3" style="padding-top:15px;">Profile</button></li>-->
             	
-                
+                 <li><a href="./logout.php">Logout</a></li>
             
             <?php
 		  }
 			?>
-            <li><a href="./logout.php">Logout</a></li>
+           
           </ul>
           
         </div>
@@ -372,13 +371,13 @@ else
                 </tr>
               </thead>
               <tbody>
-              <?php
+				<?php
 				while($row = mysql_fetch_array($result))
 				  {
 				  
 				?>
                 <tr>
-                  <td>-</td>
+                  <td><button class="btn btn-default" data-toggle="modal" data-target="#editModal" id="<?php echo $row['id']; ?>">Edit</button></td>
                   <td><?php echo $row['cup']; ?></td>
                   <td><?php echo $row['event']; ?></td>
                   <td><?php echo $row['session']; ?></td>
@@ -492,7 +491,6 @@ else
                   </div>
                 </div>
                 
-                
                 <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -511,15 +509,91 @@ else
                   </div>
                 </div>
                 
-                <div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title2</h4>
+                        <h4 class="modal-title" id="myModalLabel">Edit</h4>
                       </div>
-                      <div class="modal-body">
-                        ...
+                                            <div class="modal-body">
+                        	<form role="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+                            	<div class="form-group" style="width:50%; float:left;">
+                                <select class="form-control" name="cup">
+                                
+                                <option value="LITERARY CUP">LITERARY CUP</option>
+                                <option value="ENTERTAINMENT CUP">ENTERTAINMENT CUP</option>
+								<option value="DRAMATICS CUP">DRAMATICS CUP</option>
+								<option value="FINE ARTS CUP">FINE ARTS CUP</option>
+                                <option value="ILLUMINATION AND RANGOLI">ILLUMINATION &amp; RANGOLI</option>
+                                </select>
+                              </div>
+                              
+                              <div class="form-group" style="width:50%; float:left">
+                                <select class="form-control" name="event">
+                                <option value="ILLUMINATION">ILLUMINATION</option>
+                                <option value="RANGOLI">RANGOLI</option>
+                                <option value="ENGLISH ELOCUTION">ENGLISH ELOCUTION</option>
+                                <option value="BENGALI ELOCUTION">BENGALI ELOCUTION</option>
+                                <option value="HINDI ELOCUTION">HINDI ELOCUTION</option>
+								<option value="DEBATE">DEBATE</option>
+                                <option value="WHATS THE GOOD WORD">WHATS THE GOOD WORD</option>
+                                <option value="QUIZ">QUIZ</option>
+								<option value="WESTERN VOCALS">WESTERN VOCALS</option>
+                                <option value="EASTERN VOCALS">EASTERN VOCALS</option>
+                                <option value="WESTERN INSTRUMENTALS">WESTERN INSTRUMENTALS</option>
+								<option value="EASTERN INSTRUMENTALS">EASTERN INSTRUMENTALS</option>
+                                <option value="WESTERN GROUPS">WESTERN GROUPS</option>
+                                <option value="EASTERN GROUPS">EASTERN GROUPS</option>
+								<option value="HINDI DRAMATICS">HINDI DRAMATICS</option>
+                                <option value="BENGALI DRAMATICS">BENGALI DRAMATICS</option>
+                                <option value="ENGLISH DRAMATICS">ENGLISH DRAMATICS</option>
+								<option value="CHOREOGRAPHY">CHOREOGRAPHY</option>
+                                <option value="DUMB-CHARADS">DUMB-CHARADS</option>
+                                <option value="SKETCHING">SKETCHING</option>
+								<option value="CARTOONING">CARTOONING</option>
+                                <option value="POSTERING">POSTERING</option>
+                                <option value="COLLAGING">COLLAGING</option>
+								<option value="THERMOCOL AND CLAY MODELLING">THERMOCOL AND CLAY MODELLING</option>
+                                
+                                </select>
+                              </div>
+                                <div style="clear:both;"></div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Judges</label>
+                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Juges Deails">
+                              </div>
+                            
+                              <div class="form-group">
+                              	<label for="exampleInputPassword1">Standing</label>
+                                  <div class="row">
+                                  <div class="col-xs-4">
+                                    <input name="standing1" type="text" class="form-control" placeholder="Gold">
+                                  </div>
+                                  <div class="col-xs-4">
+                                    <input name="standing2" type="text" class="form-control" placeholder="Silver">
+                                  </div>
+                                  <div class="col-xs-4">
+                                    <input name="standing3" type="text" class="form-control" placeholder="Bronze">
+                                  </div>
+                                </div>
+                               </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Session</label>
+                                <input name="session" type="text" class="form-control"  placeholder="2013-2014">
+                                </div>
+                              <div class="form-group">
+                                <label for="exampleInputEmail1">Chaos</label>
+                                <textarea name="chaos" class="form-control" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                <label for="exampleInputEmail1">Tags</label>
+                                <input name="tags" type="text" class="form-control"  placeholder="E.g : time,date,place">
+                              </div>
+                              
+                              
+                              <button name="submit1" type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
