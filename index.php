@@ -5,9 +5,9 @@ session_start();
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Gymkhana Leisures</title>
+    <title>Gymkhana Ledgers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Database of all the GC Leisures">
+    <meta name="description" content="Database of all the GC Ledgers">
     <meta name="author" content="SURI & KIKMAK">
 
     <!-- Le styles -->
@@ -46,7 +46,7 @@ session_start();
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="brand" href="./">Gymkhana Leisures</a>
+          <a class="brand" href="./">Gymkhana Ledgers</a>
           <div class="nav-collapse collapse">
  
             <form class="navbar-form pull-right" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">

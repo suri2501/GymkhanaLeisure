@@ -13,11 +13,11 @@ include 'config.php';
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Dashboard of GC Leisures">
+    <meta name="description" content="Dashboard of GC Ledgers">
     <meta name="author" content="SURI & KIKMAK">
     <link rel="shortcut icon" href="./assets/ico/favicon.ico">
 
-    <title>Dashboard / GC Leisures</title>
+    <title>Dashboard / GC Ledgers</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +47,7 @@ include 'config.php';
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="dashboard.php">Gymkhana Leisures</a>
+          <a class="navbar-brand" href="dashboard.php">Gymkhana Ledgers</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right" style="margin-top:8px; margin-right:0px;">
@@ -526,7 +526,7 @@ else
                                 <div style="clear:both;"></div>
                               <div class="form-group">
                                 <label for="exampleInputEmail1">Judges</label>
-                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Juges Deails">
+                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Judges Details">
                               </div>
                             
                               <div class="form-group">
@@ -671,7 +671,7 @@ else
                                 <div style="clear:both;"></div>
                               <div class="form-group">
                                 <label for="exampleInputEmail1">Judges</label>
-                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Juges Deails" value="<?php echo $row['judges'];?>">
+                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Judges Details" value="<?php echo $row['judges'];?>">
                               </div>
 							  <input name="id" type="hidden" value="<?php echo $row['id']; ?>" />
                             
