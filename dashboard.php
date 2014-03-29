@@ -173,14 +173,13 @@ include 'config.php';
 					$event = $_POST['event'];
 					$judges = strtoupper($_POST['judges']);
 					$standing1 = strtoupper($_POST['standing1']);
-					
 					$standing2 = strtoupper($_POST['standing2']);
 					$standing3 = strtoupper($_POST['standing3']);
 					$chaos = strtoupper($_POST['chaos']);
 					
 					$tags = strtoupper($_POST['tags']);
 				
-					$standing = $standing1.' '.$standing2.' '.$standing3;
+					//$standing = $standing1.' '.$standing2.' '.$standing3;
 					date_default_timezone_set("Asia/Kolkata"); 
    					 $date = date('d-m-Y H:i:s'); 
 					 $year = $_POST['session']; 
@@ -190,8 +189,8 @@ include 'config.php';
        if(strlen($cup)&& strlen($event)&& strlen($judges)&& strlen($standing)&& strlen($chaos)&& strlen($tags))
                    {
                                       
-                        $login = mysql_query("INSERT INTO   `$table2` (  `cup` ,  `event` ,  `session` ,  `judges` ,  `standing` ,  `chaos` ,  `tags`,`time` ) 
-VALUES ('$cup', '$event','$year','$judges','$standing','$chaos','$tags','$date')");
+                        $login = mysql_query("INSERT INTO   `$table2` (  `cup` ,  `event` ,  `session` ,  `judges` ,  `standing1` , `standing2` , `standing3` ,  `chaos` ,  `tags`,`time` ) 
+VALUES ('$cup', '$event','$year','$judges','$standing1','$standing2','$standing3','$chaos','$tags','$date')");
 						
 						
 							$counter =  substr_count($tags, ' ');
@@ -326,7 +325,7 @@ else
 					if(strlen($_GET['event']))
 					{
 						
-						$event=$_GET['event'];
+					$event=$_GET['event'];
 					$result = mysql_query("SELECT * FROM `$table2` WHERE event='$event'");
 					
 					}
@@ -365,7 +364,9 @@ else
                   <th>Event</th>
                   <th>Session</th>
                   <th>Judges</th>
-				  <th>Standing</th>
+				  <th>Gold</th>
+                  <th>Silver</th>
+                  <th>Bronze</th>
 				  <th>Chaos</th>
 				  <th>Last Modified</th>
                 </tr>
@@ -377,12 +378,14 @@ else
 				  
 				?>
                 <tr>
-                  <td><button class="btn btn-default" data-toggle="modal" data-target="#editModal" id="<?php echo $row['id']; ?>">Edit</button></td>
+                  <td><button class="btn btn-default" data-toggle="modal" data-target="#editModal-<?php echo $row['id'];?>">Edit</button></td>
                   <td><?php echo $row['cup']; ?></td>
                   <td><?php echo $row['event']; ?></td>
                   <td><?php echo $row['session']; ?></td>
                   <td><?php echo $row['judges']; ?></td>
-                  <td><?php echo $row['standing']; ?></td>
+                  <td><?php echo $row['standing1']; ?></td>
+                  <td><?php echo $row['standing2']; ?></td>
+                  <td><?php echo $row['standing3']; ?></td>
                   <td><?php echo $row['chaos']; ?></td>
                   <td><?php echo $row['time']; ?></td>
                 </tr>
@@ -508,8 +511,20 @@ else
                     </div>
                   </div>
                 </div>
-                
-                <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <?php
+				if(isset($_GET['event']))
+				{
+				$result = mysql_query("SELECT * FROM `$table2` WHERE event='$event'");
+				}
+				else
+				{
+					$result = mysql_query("SELECT * FROM `$table2`");	
+				}
+				while($row = mysql_fetch_array($result))
+				  {
+				  
+				?>
+                <div class="modal fade" id="editModal-<?php echo $row['id'];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -561,34 +576,34 @@ else
                                 <div style="clear:both;"></div>
                               <div class="form-group">
                                 <label for="exampleInputEmail1">Judges</label>
-                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Juges Deails">
+                                <input name="judges"  class="form-control" id="exampleInputEmail1" placeholder="Enter Juges Deails" value="<?php echo $row['judges'];?>">
                               </div>
                             
                               <div class="form-group">
                               	<label for="exampleInputPassword1">Standing</label>
                                   <div class="row">
                                   <div class="col-xs-4">
-                                    <input name="standing1" type="text" class="form-control" placeholder="Gold">
+                                    <input name="standing1" type="text" class="form-control" placeholder="Gold"  value="<?php echo $row['standing1'];?>">
                                   </div>
                                   <div class="col-xs-4">
-                                    <input name="standing2" type="text" class="form-control" placeholder="Silver">
+                                    <input name="standing2" type="text" class="form-control" placeholder="Silver" value="<?php echo $row['standing2'];?>">
                                   </div>
                                   <div class="col-xs-4">
-                                    <input name="standing3" type="text" class="form-control" placeholder="Bronze">
+                                    <input name="standing3" type="text" class="form-control" placeholder="Bronze" value="<?php echo $row['standing3'];?>">
                                   </div>
                                 </div>
                                </div>
                               <div class="form-group">
                                 <label for="exampleInputEmail1">Session</label>
-                                <input name="session" type="text" class="form-control"  placeholder="2013-2014">
+                                <input name="session" type="text" class="form-control"  placeholder="2013-2014" value="<?php echo $row['session'];?>">
                                 </div>
                               <div class="form-group">
                                 <label for="exampleInputEmail1">Chaos</label>
-                                <textarea name="chaos" class="form-control" rows="3"></textarea>
+                                <textarea name="chaos" class="form-control" rows="3"><?php echo $row['chaos'];?></textarea>
                                 </div>
                                 <div class="form-group">
                                 <label for="exampleInputEmail1">Tags</label>
-                                <input name="tags" type="text" class="form-control"  placeholder="E.g : time,date,place">
+                                <input name="tags" type="text" class="form-control"  placeholder="E.g : time,date,place" value="<?php echo $row['tags'];?>">
                               </div>
                               
                               
@@ -602,7 +617,10 @@ else
                     </div>
                   </div>
                 </div>
-                
+                                <?php
+				  }
+				?>
+				
                 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
