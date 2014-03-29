@@ -82,6 +82,7 @@ include 'config.php';
         <div class="col-sm-3 col-md-2 sidebar " style="padding:10px 0;">
         	
             <div>
+			<!---------------------------SEARCH_FORM------------------------------------->
         	<form class="navbar-form navbar-right" style="margin:0; padding:0 5px; width:100%;" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
             <input class="btn btn-primary" type="submit" name="submit_search" value="search" style="margin:6px 0; width:100%;" />
             <br />
@@ -167,7 +168,7 @@ include 'config.php';
         
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
         	
-            
+            <!---------------------SUBMIT_EDIT------------------------->
             <?php
             if(isset($_POST['submit_edit']))
             {	
@@ -232,9 +233,9 @@ else
             ?>
             
             
-            
+            <!-----------------------SUBMIT_COMPOSE------------------------------------------------->
 			<?php
-            if(isset($_POST['submit1']))
+            if(isset($_POST['submit_compose']))
             {	
 					$cup = $_POST['cup'];
 					$event = $_POST['event'];
@@ -301,7 +302,7 @@ else
           
               <div class="btn-group col-xs-6 col-sm-3 placeholder temp1">
               <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="General Champion Social &amp; Cultural">
                           <h4>Literary Cup</h4>
                           <span class="caret"></span>
               </button>
@@ -319,7 +320,7 @@ else
             
             <div class="btn-group col-xs-6 col-sm-3 placeholder temp1">
               <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="General Champion Social &amp; Cultural">
                           <h4>Dramatics Cup</h4>
                           <span class="caret"></span>
               </button>
@@ -335,7 +336,7 @@ else
             
             <div class="btn-group col-xs-6 col-sm-3 placeholder temp1">
               <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="General Champion Social &amp; Cultural">
                           <h4>Fine Arts Cup</h4>
                           <span class="caret"></span>
               </button>
@@ -351,7 +352,7 @@ else
             
             <div class="btn-group col-xs-6 col-sm-3 placeholder temp1">
               <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="General Champion Social &amp; Cultural">
                           <h4>Entertainment Cup</h4>
                           <span class="caret"></span>
               </button>
@@ -367,7 +368,7 @@ else
             
             <div class="btn-group col-xs-6 col-sm-3 placeholder temp1">
               <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
+              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="General Champion Social &amp; Cultural">
                           <h4>Illumination &amp; Rangoli</h4>
                           <span class="caret"></span>
               </button>
@@ -557,7 +558,7 @@ else
                               
                       </div>
                       <div class="modal-footer">
-					  <button name="submit1" type="submit" class="btn btn-primary">Submit</button>
+					  <button name="submit_compose" type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         <button type="button" class="btn btn-danger dropdown-toggle" data-dismiss="modal">Close</button>
                         <!--<button type="button" class="btn btn-primary">Save changes</button>-->
@@ -593,7 +594,7 @@ else
 					$result = mysql_query("SELECT * FROM `$table2`");	
 				}
 				
-				if(isset($_POST['submit_search']))
+				/*if(isset($_POST['submit_search']))
 				{
 					if(isset($_POST['event_search'])&&isset($_POST['tags_search'])&&isset($_POST['year_search']))
 					{
@@ -608,12 +609,14 @@ else
 						WHERE (event='$event') AND (session='$year_new') AND tags LIKE '%$tags%'");
 						}
 					}
-				}
+				}*/
 				
 				while($row = mysql_fetch_array($result))
 				  {
 				  
 				?>
+				
+				<!-----------------------------------------------EDIT--------------------------------------->
                 <div class="modal fade" id="editModal-<?php echo $row['id'];?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
@@ -713,7 +716,7 @@ else
                                 <?php
 				  }
 				?>
-				
+				<!--------------------------------------PROFILE---------------------------------------------->
                 <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
