@@ -88,7 +88,9 @@ include 'config.php';
             <input class="btn btn-primary" type="submit" name="submit_search" value="search" style="margin:6px 0; width:100%;" />
             <br />
           	<select name="year_search" class="form-control" style="margin:6px 0; width:100%;">
-              	<option style="text-align:center;">YEAR</option>
+              	<option selected style="text-align:center;" value="">YEAR</option>
+                
+                
                 <?php 
 				for ($x=2014; $x>=2004; $x--)
 				{
@@ -99,6 +101,7 @@ include 'config.php';
             <br />
             
             <select name="event_search" class="form-control" style="margin:6px 0; width:100%;">
+            <option value="" selected>EVENTS</option>
               <option value="ENGLISH ELOCUTION">ENGLISH ELOCUTION</option>
                                 <option value="BENGALI ELOCUTION">BENGALI ELOCUTION</option>
                                 <option value="HINDI ELOCUTION">HINDI ELOCUTION</option>
@@ -124,7 +127,7 @@ include 'config.php';
             </select>
             <br />
             <select name="tags_search" class="form-control" style="margin:6px 0; width:100%;">
-              <option>TAGS</option>
+              <option value="" selected>TAGS</option>
 			  <?php
 				$result = mysql_query("SELECT * FROM `$table3`");
 				while($row = mysql_fetch_array($result))
@@ -417,27 +420,80 @@ else
 				}
 				if(isset($_POST['submit_search']))
 				{
-					if(isset($_POST['event_search'])&&isset($_POST['tags_search'])&&isset($_POST['year_search']))
+		
+					if(strlen($_POST['event_search'])&& strlen($_POST['tags_search'])&& strlen($_POST['year_search']))
 					{
-						if(strlen($_POST['event_search'])&& strlen($_POST['tags_search'])&& strlen($_POST['year_search']))
-						{
-							
 							$event=strtoupper($_POST['event_search']);
 							$year_new  = strtoupper($_POST['year_search']);
 							$tags = '%'.strtoupper($_POST['tags_search']).'%';
-							
-						$result = mysql_query("SELECT * FROM `$table2`
-						WHERE (event='$event') AND (session='$year_new') AND tags LIKE '%$tags%'");
-						}
+							$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND (session='$year_new') AND tags LIKE '%$tags%'");
+						
 					}
+					else if(strlen($_POST['event_search'])&& strlen($_POST['year_search']))
+					{
+							
+							$event=strtoupper($_POST['event_search']);
+							$year_new  = strtoupper($_POST['year_search']);
+							$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND (session='$year_new')");
+						
+					}
+					else if(strlen($_POST['event_search'])&& strlen($_POST['tags_search']))
+					{
+							
+							$event=strtoupper($_POST['event_search']);
+							$tags = '%'.strtoupper($_POST['tags_search']).'%';
+							$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND tags LIKE '%$tags%'");
+						
+					}
+					else if(strlen($_POST['year_search'])&& strlen($_POST['tags_search']))
+					{
+							$event=strtoupper($_POST['event_search']);
+							$tags = '%'.strtoupper($_POST['tags_search']).'%';
+							$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND tags LIKE '%$tags%'");
+							
+					}
+					else if((strlen($_POST['event_search'])))
+					{
+						$event=strtoupper($_POST['event_search']);
+						$result = mysql_query("SELECT * FROM `$table2` WHERE event='$event'");
+						}
+					else if((strlen($_POST['tags_search'])))
+					{
+							$tags = '%'.strtoupper($_POST['tags_search']).'%';
+							$result = mysql_query("SELECT * FROM `$table2` WHERE tags LIKE '%$tags%'");
+						}
+					else{
+						
+						$year_new  = strtoupper($_POST['year_search']);
+						$result = mysql_query("SELECT * FROM `$table2` WHERE session='$year_new'");
+						
+						}
 				}
+				/*
+				if($year_new=="YEAR"){
+								if($tags=="TAGS"){
+									$result = mysql_query("SELECT * FROM `$table2` WHERE event='$event'");
+								}
+								else{
+									$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND tags LIKE '%$tags%'");
+								}
+							}
+							else{
+								if($tags=="TAGS"){
+									$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND (session='$year_new')");
+								}
+								else{
+									$result = mysql_query("SELECT * FROM `$table2` WHERE (event='$event') AND (session='$year_new') AND tags LIKE '%$tags%'");
+								}
+							}
+				*/
 				//$result = mysql_query("SELECT * FROM `$table2` WHERE event='ENGLISH ELOCUTION'");
 				//$num_rows = mysql_num_rows($result);
 			
 			?>
           <!--<h2 class="sub-header">Section title</h2>-->
 
-          <div class="table-responsive">
+          <div class="table-responsive" style="font-size:13px;">
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -594,7 +650,7 @@ else
                       <div class="modal-body">
                         <!----- data ---->
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped" style="font-size:13px;'>
               <thead>
                 <tr>
 				
