@@ -4,8 +4,9 @@ if(isset($_SESSION['email']))
 {
 	$user ='';
 	$email = $_SESSION['email'];
+	$user_id = $_SESSION['user_id'];
 }
-$user_id = $_SESSION['user_id'];
+
 include 'config.php';
 ?>
 <!DOCTYPE html>
